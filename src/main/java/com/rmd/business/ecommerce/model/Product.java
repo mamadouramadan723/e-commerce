@@ -11,12 +11,12 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer productId;
 
-    private @NotNull String name;
-    private @NotNull String imageURL;
-    private @NotNull double price;
-    private @NotNull String description;
+    private @NotNull String productName;
+    private @NotNull String productImageURL;
+    private @NotNull double productPrice;
+    private @NotNull String productDescription;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -24,56 +24,56 @@ public class Product {
     Category category;
 
 
-    public Product(String name, String imageURL, double price, String description, Category category) {
+    public Product(String productName, String productImageURL, double productPrice, String productDescription, Category category) {
         super();
-        this.name = name;
-        this.imageURL = imageURL;
-        this.price = price;
-        this.description = description;
+        this.productName = productName;
+        this.productImageURL = productImageURL;
+        this.productPrice = productPrice;
+        this.productDescription = productDescription;
         this.category = category;
     }
 
     public Product() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getProductImageURL() {
+        return productImageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setProductImageURL(String productImageURL) {
+        this.productImageURL = productImageURL;
     }
 
-    public double getPrice() {
-        return price;
+    public double getProductPrice() {
+        return productPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public String getDescription() {
-        return description;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public Category getCategory() {
@@ -87,11 +87,11 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", imageURL='" + imageURL + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
+                "id=" + productId +
+                ", name='" + productName + '\'' +
+                ", imageURL='" + productImageURL + '\'' +
+                ", price=" + productPrice +
+                ", description='" + productDescription + '\'' +
                 '}';
     }
 }

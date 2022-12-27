@@ -6,71 +6,71 @@ import javax.validation.constraints.NotNull;
 
 public class ProductDto {
 
-    private Integer id;
-    private @NotNull String name;
-    private @NotNull String imageURL;
-    private @NotNull double price;
-    private @NotNull String description;
+    private Integer productId;
+    private @NotNull String productName;
+    private @NotNull String productImageURL;
+    private @NotNull double productPrice;
+    private @NotNull String productDescription;
     private @NotNull Integer categoryId;
 
-    public ProductDto(@NotNull String name, @NotNull String imageURL, @NotNull double price, @NotNull String description, @NotNull Integer categoryId) {
-        this.name = name;
-        this.imageURL = imageURL;
-        this.price = price;
-        this.description = description;
+    public ProductDto(@NotNull String productName, @NotNull String productImageURL, @NotNull double productPrice, @NotNull String productDescription, @NotNull Integer categoryId) {
+        this.productName = productName;
+        this.productImageURL = productImageURL;
+        this.productPrice = productPrice;
+        this.productDescription = productDescription;
         this.categoryId = categoryId;
     }
 
     public ProductDto(Product product) {
-        this.setId(product.getId());
-        this.setName(product.getName());
-        this.setImageURL(product.getImageURL());
-        this.setDescription(product.getDescription());
-        this.setPrice(product.getPrice());
+        this.setProductId(product.getProductId());
+        this.setProductName(product.getProductName());
+        this.setProductImageURL(product.getProductImageURL());
+        this.setProductDescription(product.getProductDescription());
+        this.setProductPrice(product.getProductPrice());
         this.setCategoryId(product.getCategory().getId());
     }
 
     public ProductDto() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getProductImageURL() {
+        return productImageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setProductImageURL(String productImageURL) {
+        this.productImageURL = productImageURL;
     }
 
-    public double getPrice() {
-        return price;
+    public double getProductPrice() {
+        return productPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public String getDescription() {
-        return description;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public Integer getCategoryId() {

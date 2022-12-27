@@ -1,7 +1,7 @@
 package com.rmd.business.ecommerce.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "categories")
@@ -12,24 +12,24 @@ public class Category {
     private Integer id;
 
     @Column(name = "category_name")
-    private @NotBlank String categoryName;
+    private @NotNull String categoryName;
 
-    private @NotBlank String description;
+    private @NotNull String categoryDescription;
 
-    private @NotBlank String imageUrl;
+    private @NotNull String imageUrl;
 
 
     public Category() {
     }
 
-    public Category(@NotBlank String categoryName, @NotBlank String description) {
+    public Category(@NotNull String categoryName, @NotNull String categoryDescription) {
         this.categoryName = categoryName;
-        this.description = description;
+        this.categoryDescription = categoryDescription;
     }
 
-    public Category(@NotBlank String categoryName, @NotBlank String description, @NotBlank String imageUrl) {
+    public Category(@NotNull String categoryName, @NotNull String categoryDescription, @NotNull String imageUrl) {
         this.categoryName = categoryName;
-        this.description = description;
+        this.categoryDescription = categoryDescription;
         this.imageUrl = imageUrl;
     }
 
@@ -41,17 +41,12 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategoryDescription() {
+        return categoryDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "User {category id=" + id + ", category name='" + categoryName + "', description='" + description + "'}";
+    public void setCategoryDescription(String categoryDescription) {
+        this.categoryDescription = categoryDescription;
     }
 
     public String getImageUrl() {
@@ -68,5 +63,9 @@ public class Category {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    @Override
+    public String toString() {
+        return "User {category id=" + id + ", category name='" + categoryName + "', description='" + categoryDescription + "'}";
     }
 }

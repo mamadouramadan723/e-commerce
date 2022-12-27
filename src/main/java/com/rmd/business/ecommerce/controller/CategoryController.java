@@ -23,7 +23,11 @@ import java.util.Objects;
 public class CategoryController {
 
     @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<Category>> getCategories() {
@@ -34,7 +38,7 @@ public class CategoryController {
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createCategory(@Valid @RequestBody Category category) {
         if (Objects.nonNull(categoryService.readCategory(category.getCategoryName()))) {
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new ApiResponse(false, "category already exists"), HttpStatus.CONFLICT);
         }
         categoryService.createCategory(category);
         return new ResponseEntity<>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
@@ -46,7 +50,7 @@ public class CategoryController {
         if (Objects.nonNull(categoryService.readCategory(categoryID))) {
             // If the category exists then update it.
             categoryService.updateCategory(categoryID, category);
-            return new ResponseEntity<ApiResponse>(new ApiResponse(true, "updated the category"), HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse(true, "updated the category"), HttpStatus.OK);
         }
 
         // If the category doesn't exist then return a response of unsuccessful.

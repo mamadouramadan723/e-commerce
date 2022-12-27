@@ -14,15 +14,19 @@ import java.util.List;
 public class ProductService {
 
     @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public static Product getProductFromDto(ProductDto productDto, Category category) {
         Product product = new Product();
         product.setCategory(category);
-        product.setDescription(productDto.getDescription());
-        product.setImageURL(productDto.getImageURL());
-        product.setPrice(productDto.getPrice());
-        product.setName(productDto.getName());
+        product.setProductDescription(productDto.getProductDescription());
+        product.setProductImageURL(productDto.getProductImageURL());
+        product.setProductPrice(productDto.getProductPrice());
+        product.setProductName(productDto.getProductName());
         return product;
     }
     public void addProduct(ProductDto productDto, Category category) {
@@ -47,12 +51,8 @@ public class ProductService {
     public void updateProduct(Integer productID, ProductDto productDto, Category category) {
         Product product = getProductFromDto(productDto, category);
         // set the id for updating
-        product.setId(productID);
+        product.setProductId(productID);
         // update
         productRepository.save(product);
     }
-
-
-
-
 }

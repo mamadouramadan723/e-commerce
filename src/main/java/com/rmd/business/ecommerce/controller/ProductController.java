@@ -48,7 +48,7 @@ public class ProductController {
                                                      @RequestBody @Valid ProductDto productDto) {
         Optional<Category> optionalCategory = categoryService.readCategory(productDto.getCategoryId());
         if (optionalCategory.isEmpty()) {
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category is invalid"), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new ApiResponse(false, "category is invalid"), HttpStatus.CONFLICT);
         }
         Category category = optionalCategory.get();
         productService.updateProduct(productID, productDto, category);
