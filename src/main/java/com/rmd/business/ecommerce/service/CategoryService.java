@@ -39,7 +39,7 @@ public class CategoryService {
         if (category != null) {
             category.setCategoryName(newCategory.getCategoryName());
             category.setCategoryDescription(newCategory.getCategoryDescription());
-            category.setImageUrl(newCategory.getImageUrl());
+            category.setCategoryImageUrl(newCategory.getCategoryImageUrl());
             categoryRepository.save(category);
         }
     }

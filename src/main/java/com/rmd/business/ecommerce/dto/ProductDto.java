@@ -27,7 +27,7 @@ public class ProductDto {
         this.setProductImageURL(product.getProductImageURL());
         this.setProductDescription(product.getProductDescription());
         this.setProductPrice(product.getProductPrice());
-        this.setCategoryId(product.getCategory().getId());
+        this.setCategoryId(product.getCategory().getCategoryId());
     }
 
     public ProductDto() {
