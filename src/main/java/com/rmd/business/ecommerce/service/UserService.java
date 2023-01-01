@@ -31,23 +31,23 @@ public class UserService {
     public ResponseDto signUp(SignupDto signupDto) {
         // check if user is already present
         if (Objects.nonNull(userRepository.findByEmail(signupDto.getEmail()))) {
-            // we have an user
+            // we have a user
             throw new CustomException("user already present");
         }
 
 
         // hash the password
 
-        String encryptedpassword = signupDto.getPassword();
+        String encryptedPassword = signupDto.getPassword();
 
         try {
-            encryptedpassword = hashPassword(signupDto.getPassword());
+            encryptedPassword = hashPassword(signupDto.getPassword());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
         User user = new User(signupDto.getFirstName(), signupDto.getLastName(),
-                signupDto.getEmail(), encryptedpassword);
+                signupDto.getEmail(), encryptedPassword);
 
         userRepository.save(user);
 
@@ -59,17 +59,15 @@ public class UserService {
 
         authenticationService.saveConfirmationToken(authenticationToken);
 
-        ResponseDto responseDto = new ResponseDto("success", "user created succesfully");
-        return responseDto;
+        return new ResponseDto("success", "user created successfully");
     }
 
     private String hashPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(password.getBytes());
         byte[] digest = md.digest();
-        String hash = DatatypeConverter
+        return DatatypeConverter
                 .printHexBinary(digest).toUpperCase();
-        return hash;
     }
 
     public SignInResponseDto signIn(SignInDto signInDto) {
@@ -97,13 +95,13 @@ public class UserService {
 
         AuthenticationToken token = authenticationService.getToken(user);
 
-        // retrive the token
+        // retrieve the token
 
         if (Objects.isNull(token)) {
             throw new CustomException("token is not present");
         }
 
-        return new SignInResponseDto("sucess", token.getToken());
+        return new SignInResponseDto("success", token.getToken());
 
         // return response
     }

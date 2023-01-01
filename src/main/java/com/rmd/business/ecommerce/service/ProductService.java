@@ -9,50 +9,55 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
-
     @Autowired
-    private final ProductRepository productRepository;
+    ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    public static Product getProductFromDto(ProductDto productDto, Category category) {
+    public void createProduct(ProductDto productDto, Category category) {
         Product product = new Product();
-        product.setCategory(category);
         product.setProductDescription(productDto.getProductDescription());
         product.setProductImageURL(productDto.getProductImageURL());
-        product.setProductPrice(productDto.getProductPrice());
         product.setProductName(productDto.getProductName());
-        return product;
-    }
-    public void addProduct(ProductDto productDto, Category category) {
-        Product product = getProductFromDto(productDto, category);
+        product.setCategory(category);
+        product.setProductPrice(productDto.getProductPrice());
         productRepository.save(product);
     }
 
-    // list of all the products
-    public List<ProductDto> listProducts() {
-        // first fetch all the products
-        List<Product> products = productRepository.findAll();
-        List<ProductDto> productDTOs = new ArrayList<>();
-
-        for(Product product : products) {
-            // for each product change it to DTO
-            productDTOs.add(new ProductDto(product));
-        }
-        return productDTOs;
+    public ProductDto getProductDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setProductDescription(product.getProductDescription());
+        productDto.setProductImageURL(product.getProductImageURL());
+        productDto.setProductName(product.getProductName());
+        productDto.setCategoryId(product.getCategory().getCategoryId());
+        productDto.setProductPrice(product.getProductPrice());
+        productDto.setProductId(product.getProductId());
+        return productDto;
     }
 
-    // update a product
-    public void updateProduct(Integer productID, ProductDto productDto, Category category) {
-        Product product = getProductFromDto(productDto, category);
-        // set the id for updating
-        product.setProductId(productID);
-        // update
+    public List<ProductDto> getAllProducts() {
+        List<Product> allProducts = productRepository.findAll();
+
+        List<ProductDto> productDtos = new ArrayList<>();
+        for(Product product: allProducts) {
+            productDtos.add(getProductDto(product));
+        }
+        return productDtos;
+    }
+
+    public void updateProduct(ProductDto productDto, Integer productId) throws Exception {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        // throw an exception if product does not exists
+        if (optionalProduct.isEmpty()) {
+            throw new Exception("product not present");
+        }
+        Product product = optionalProduct.get();
+        product.setProductDescription(productDto.getProductDescription());
+        product.setProductImageURL(productDto.getProductImageURL());
+        product.setProductName(productDto.getProductName());
+        product.setProductPrice(productDto.getProductPrice());
         productRepository.save(product);
     }
 }

@@ -1,0 +1,73 @@
+package com.rmd.business.ecommerce.controller;
+
+
+import com.rmd.business.ecommerce.common.ApiResponse;
+import com.rmd.business.ecommerce.dto.ProductDto;
+import com.rmd.business.ecommerce.model.Product;
+import com.rmd.business.ecommerce.model.User;
+import com.rmd.business.ecommerce.model.WishList;
+import com.rmd.business.ecommerce.service.AuthenticationService;
+import com.rmd.business.ecommerce.service.WishListService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/wishlist")
+public class WishListController {
+    @Autowired
+    WishListService wishListService;
+
+    @Autowired
+    AuthenticationService authenticationService;
+
+    // save product as wishlist item
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse> addToWishList(@RequestBody Product product,
+                                                     @RequestParam("token") String token) {
+        // authenticate the token
+        authenticationService.authenticate(token);
+
+
+        // find the user
+
+        User user = authenticationService.getUser(token);
+        //check if the product exist in the wishlist
+
+        List<Integer> productIds = wishListService.getWishProductIdListForUser(user);
+        if(productIds.contains(product.getProductId())){
+            return new ResponseEntity<>(new ApiResponse(false, "Product already exists"), HttpStatus.CONFLICT);
+        }
+
+        // save the item in wishlist
+
+        WishList wishList = new WishList(user, product);
+
+        wishListService.createWishlist(wishList);
+
+        ApiResponse apiResponse = new ApiResponse(true, "Added to wishlist"+product.getCategory());
+        return  new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
+
+    }
+
+    // get all wishlist item for a user
+
+    @GetMapping("/{token}")
+    public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("token") String token) {
+
+        // authenticate the token
+        authenticationService.authenticate(token);
+
+        // find the user
+
+        User user = authenticationService.getUser(token);
+
+        List<ProductDto> productDtos = wishListService.getWishListForUser(user);
+
+        return new ResponseEntity<>(productDtos, HttpStatus.OK);
+
+    }
+}
