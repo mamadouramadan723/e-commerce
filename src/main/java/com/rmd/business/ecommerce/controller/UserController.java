@@ -2,7 +2,7 @@ package com.rmd.business.ecommerce.controller;
 
 import com.rmd.business.ecommerce.dto.ResponseDto;
 import com.rmd.business.ecommerce.dto.user.SignInDto;
-import com.rmd.business.ecommerce.dto.user.SignInResponseDto;
+import com.rmd.business.ecommerce.dto.user.SignInReponseDto;
 import com.rmd.business.ecommerce.dto.user.SignupDto;
 import com.rmd.business.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +21,15 @@ public class UserController {
     // two apis
 
     // signup
-
     @PostMapping("/signup")
     public ResponseDto signup(@RequestBody SignupDto signupDto) {
         return userService.signUp(signupDto);
     }
 
-
     // signin
-
     @PostMapping("/signin")
-    public SignInResponseDto signIn(@RequestBody SignInDto signInDto) {
+    public SignInReponseDto signIn(@RequestBody SignInDto signInDto) {
+        System.out.println("-----> user signing");
         return userService.signIn(signInDto);
     }
-
-
 }
-

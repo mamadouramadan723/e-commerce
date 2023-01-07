@@ -1,6 +1,5 @@
 package com.rmd.business.ecommerce.service;
 
-
 import com.rmd.business.ecommerce.exceptions.AuthenticationFailException;
 import com.rmd.business.ecommerce.model.AuthenticationToken;
 import com.rmd.business.ecommerce.model.User;

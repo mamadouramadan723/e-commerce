@@ -1,76 +1,51 @@
 package com.rmd.business.ecommerce.dto;
 
-import com.rmd.business.ecommerce.model.Product;
-
 import javax.validation.constraints.NotNull;
 
 public class ProductDto {
-
-    private Integer productId;
-    private @NotNull String productName;
-    private @NotNull String productImageURL;
-    private @NotNull double productPrice;
-    private @NotNull String productDescription;
+    // for create it can be optional
+    // for update we need the id
+    private Integer id;
+    private @NotNull String name;
+    private @NotNull String imageURL;
+    private @NotNull double price;
+    private @NotNull String description;
     private @NotNull Integer categoryId;
 
-    public ProductDto(@NotNull String productName, @NotNull String productImageURL, @NotNull double productPrice, @NotNull String productDescription, @NotNull Integer categoryId) {
-        this.productName = productName;
-        this.productImageURL = productImageURL;
-        this.productPrice = productPrice;
-        this.productDescription = productDescription;
-        this.categoryId = categoryId;
-    }
-
-    public ProductDto(Product product) {
-        this.setProductId(product.getProductId());
-        this.setProductName(product.getProductName());
-        this.setProductImageURL(product.getProductImageURL());
-        this.setProductDescription(product.getProductDescription());
-        this.setProductPrice(product.getProductPrice());
-        this.setCategoryId(product.getCategory().getCategoryId());
-    }
 
     public ProductDto() {
     }
 
-    public Integer getProductId() {
-        return productId;
+    public String getName() {
+        return name;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    public String getProductImageURL() {
-        return productImageURL;
+    public double getPrice() {
+        return price;
     }
 
-    public void setProductImageURL(String productImageURL) {
-        this.productImageURL = productImageURL;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public double getProductPrice() {
-        return productPrice;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getCategoryId() {
@@ -79,5 +54,13 @@ public class ProductDto {
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

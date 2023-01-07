@@ -19,7 +19,7 @@ public class AuthenticationToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer tokenId;
+    private Integer id;
 
     private String token;
 
@@ -54,12 +54,12 @@ public class AuthenticationToken {
         this.user = user;
     }
 
-    public Integer getTokenId() {
-        return tokenId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTokenId(Integer tokenId) {
-        this.tokenId = tokenId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public AuthenticationToken(User user) {

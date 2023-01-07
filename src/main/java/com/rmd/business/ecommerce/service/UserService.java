@@ -2,7 +2,7 @@ package com.rmd.business.ecommerce.service;
 
 import com.rmd.business.ecommerce.dto.ResponseDto;
 import com.rmd.business.ecommerce.dto.user.SignInDto;
-import com.rmd.business.ecommerce.dto.user.SignInResponseDto;
+import com.rmd.business.ecommerce.dto.user.SignInReponseDto;
 import com.rmd.business.ecommerce.dto.user.SignupDto;
 import com.rmd.business.ecommerce.exceptions.AuthenticationFailException;
 import com.rmd.business.ecommerce.exceptions.CustomException;
@@ -32,6 +32,7 @@ public class UserService {
         // check if user is already present
         if (Objects.nonNull(userRepository.findByEmail(signupDto.getEmail()))) {
             // we have a user
+            System.out.println("user already present");
             throw new CustomException("user already present");
         }
 
@@ -70,7 +71,7 @@ public class UserService {
                 .printHexBinary(digest).toUpperCase();
     }
 
-    public SignInResponseDto signIn(SignInDto signInDto) {
+    public SignInReponseDto signIn(SignInDto signInDto) {
         // find user by email
 
         User user = userRepository.findByEmail(signInDto.getEmail());
@@ -82,7 +83,8 @@ public class UserService {
         // hash the password
 
         try {
-            if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))) {
+            if (!user.getPasswoprd().equals(hashPassword(signInDto.getPassword()))) {
+                System.out.println("user already present");
                 throw new AuthenticationFailException("wrong password");
             }
         } catch (NoSuchAlgorithmException e) {
@@ -94,15 +96,16 @@ public class UserService {
         // if password match
 
         AuthenticationToken token = authenticationService.getToken(user);
-
         // retrieve the token
 
         if (Objects.isNull(token)) {
+            System.out.println("-----> user already present");
             throw new CustomException("token is not present");
         }
 
-        return new SignInResponseDto("success", token.getToken());
+        System.out.println("-----> success");
 
+        return new SignInReponseDto("success", token.getToken());
         // return response
     }
 }

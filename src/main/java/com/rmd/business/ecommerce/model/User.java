@@ -11,10 +11,9 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Integer id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -28,22 +27,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+    public Integer getId() {
+        return id;
     }
 
-    public User() {
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -70,11 +59,21 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+    public String getPasswoprd() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPasswoprd(String passwoprd) {
+        this.password = passwoprd;
+    }
+
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.password = password;
+    }
+
+    public User() {
     }
 }

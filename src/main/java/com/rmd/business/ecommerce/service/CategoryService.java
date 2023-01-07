@@ -1,46 +1,35 @@
 package com.rmd.business.ecommerce.service;
 
 import com.rmd.business.ecommerce.model.Category;
-import com.rmd.business.ecommerce.repository.CategoryRepository;
+import com.rmd.business.ecommerce.repository.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
 
     @Autowired
-    private final CategoryRepository categoryRepository;
-
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
-
-    public List<Category> listCategories() {
-        return categoryRepository.findAll();
-    }
+    CategoryRepo categoryRepo;
 
     public void createCategory(Category category) {
-        categoryRepository.save(category);
+        categoryRepo.save(category);
     }
 
-    public Category readCategory(String categoryName) {
-        return categoryRepository.findByCategoryName(categoryName);
+    public List<Category> listCategory() {
+        return categoryRepo.findAll();
     }
 
-    public Optional<Category> readCategory(Integer categoryId) {
-        return categoryRepository.findById(categoryId);
+    public void editCategory(int categoryId, Category updateCategory) {
+        Category category = categoryRepo.getById(categoryId);
+        category.setCategoryName(updateCategory.getCategoryName());
+        category.setDescription(updateCategory.getDescription());
+        category.setImageUrl(updateCategory.getImageUrl());
+        categoryRepo.save(category);
     }
 
-    public void updateCategory(Integer categoryID, Category newCategory) {
-        Category category = categoryRepository.findById(categoryID).orElse(null);
-        if (category != null) {
-            category.setCategoryName(newCategory.getCategoryName());
-            category.setCategoryDescription(newCategory.getCategoryDescription());
-            category.setCategoryImageUrl(newCategory.getCategoryImageUrl());
-            categoryRepository.save(category);
-        }
+    public boolean findById(int categoryId) {
+        return categoryRepo.findById(categoryId).isPresent();
     }
 }

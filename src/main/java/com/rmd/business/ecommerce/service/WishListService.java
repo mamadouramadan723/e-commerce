@@ -1,6 +1,5 @@
 package com.rmd.business.ecommerce.service;
 
-
 import com.rmd.business.ecommerce.dto.ProductDto;
 import com.rmd.business.ecommerce.model.User;
 import com.rmd.business.ecommerce.model.WishList;
@@ -27,7 +26,7 @@ public class WishListService {
     public List<ProductDto> getWishListForUser(User user) {
         final List<WishList> wishLists = wishListRepository.findAllByUserOrderByCreatedDateDesc(user);
         List<ProductDto> productDtos = new ArrayList<>();
-        for (WishList wishList: wishLists) {
+        for (WishList wishList : wishLists) {
             productDtos.add(productService.getProductDto(wishList.getProduct()));
         }
 
@@ -37,8 +36,8 @@ public class WishListService {
     public List<Integer> getWishProductIdListForUser(User user) {
         final List<WishList> wishLists = wishListRepository.findAllByUserOrderByCreatedDateDesc(user);
         List<Integer> productIds = new ArrayList<>();
-        for (WishList wishList: wishLists) {
-            productIds.add(productService.getProductDto(wishList.getProduct()).getProductId());
+        for (WishList wishList : wishLists) {
+            productIds.add(productService.getProductDto(wishList.getProduct()).getId());
         }
 
         return productIds;

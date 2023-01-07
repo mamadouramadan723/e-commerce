@@ -1,8 +1,15 @@
 package com.rmd.business.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -11,69 +18,51 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productId;
+    private Integer id;
 
-    private @NotNull String productName;
-    private @NotNull String productImageURL;
-    private @NotNull double productPrice;
-    private @NotNull String productDescription;
+    private @NotNull String name;
+    private @NotNull String imageURL;
+    private @NotNull double price;
+    private @NotNull String description;
 
+
+    // Many to one relationship
+    @ManyToOne
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     Category category;
 
 
-    public Product(String productName, String productImageURL, double productPrice, String productDescription, Category category) {
-        super();
-        this.productName = productName;
-        this.productImageURL = productImageURL;
-        this.productPrice = productPrice;
-        this.productDescription = productDescription;
-        this.category = category;
+    public String getName() {
+        return name;
     }
 
-    public Product() {
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    public String getProductName() {
-        return productName;
+    public double getPrice() {
+        return price;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public String getProductImageURL() {
-        return productImageURL;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProductImageURL(String productImageURL) {
-        this.productImageURL = productImageURL;
-    }
-
-    public double getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Category getCategory() {
@@ -84,14 +73,11 @@ public class Product {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + productId +
-                ", name='" + productName + '\'' +
-                ", imageURL='" + productImageURL + '\'' +
-                ", price=" + productPrice +
-                ", description='" + productDescription + '\'' +
-                '}';
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

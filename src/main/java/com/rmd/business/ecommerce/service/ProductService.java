@@ -1,6 +1,7 @@
 package com.rmd.business.ecommerce.service;
 
 import com.rmd.business.ecommerce.dto.ProductDto;
+import com.rmd.business.ecommerce.exceptions.ProductNotExistsException;
 import com.rmd.business.ecommerce.model.Category;
 import com.rmd.business.ecommerce.model.Product;
 import com.rmd.business.ecommerce.repository.ProductRepository;
@@ -18,22 +19,22 @@ public class ProductService {
 
     public void createProduct(ProductDto productDto, Category category) {
         Product product = new Product();
-        product.setProductDescription(productDto.getProductDescription());
-        product.setProductImageURL(productDto.getProductImageURL());
-        product.setProductName(productDto.getProductName());
+        product.setDescription(productDto.getDescription());
+        product.setImageURL(productDto.getImageURL());
+        product.setName(productDto.getName());
         product.setCategory(category);
-        product.setProductPrice(productDto.getProductPrice());
+        product.setPrice(productDto.getPrice());
         productRepository.save(product);
     }
 
     public ProductDto getProductDto(Product product) {
         ProductDto productDto = new ProductDto();
-        productDto.setProductDescription(product.getProductDescription());
-        productDto.setProductImageURL(product.getProductImageURL());
-        productDto.setProductName(product.getProductName());
-        productDto.setCategoryId(product.getCategory().getCategoryId());
-        productDto.setProductPrice(product.getProductPrice());
-        productDto.setProductId(product.getProductId());
+        productDto.setDescription(product.getDescription());
+        productDto.setImageURL(product.getImageURL());
+        productDto.setName(product.getName());
+        productDto.setCategoryId(product.getCategory().getId());
+        productDto.setPrice(product.getPrice());
+        productDto.setId(product.getId());
         return productDto;
     }
 
@@ -49,15 +50,23 @@ public class ProductService {
 
     public void updateProduct(ProductDto productDto, Integer productId) throws Exception {
         Optional<Product> optionalProduct = productRepository.findById(productId);
-        // throw an exception if product does not exists
+        // throw an exception if product does not exist
         if (optionalProduct.isEmpty()) {
             throw new Exception("product not present");
         }
         Product product = optionalProduct.get();
-        product.setProductDescription(productDto.getProductDescription());
-        product.setProductImageURL(productDto.getProductImageURL());
-        product.setProductName(productDto.getProductName());
-        product.setProductPrice(productDto.getProductPrice());
+        product.setDescription(productDto.getDescription());
+        product.setImageURL(productDto.getImageURL());
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
         productRepository.save(product);
+    }
+
+    public Product findById(Integer productId) throws ProductNotExistsException {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isEmpty()) {
+            throw new ProductNotExistsException("product id is invalid: " + productId);
+        }
+        return optionalProduct.get();
     }
 }

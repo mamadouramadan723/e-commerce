@@ -1,6 +1,5 @@
 package com.rmd.business.ecommerce.controller;
 
-
 import com.rmd.business.ecommerce.common.ApiResponse;
 import com.rmd.business.ecommerce.dto.ProductDto;
 import com.rmd.business.ecommerce.model.Product;
@@ -11,13 +10,20 @@ import com.rmd.business.ecommerce.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/wishlist")
 public class WishListController {
+
     @Autowired
     WishListService wishListService;
 
@@ -31,30 +37,26 @@ public class WishListController {
         // authenticate the token
         authenticationService.authenticate(token);
 
-
         // find the user
-
         User user = authenticationService.getUser(token);
+
         //check if the product exist in the wishlist
 
         List<Integer> productIds = wishListService.getWishProductIdListForUser(user);
-        if(productIds.contains(product.getProductId())){
+        if(productIds.contains(product.getId())){
             return new ResponseEntity<>(new ApiResponse(false, "Product already exists"), HttpStatus.CONFLICT);
         }
-
         // save the item in wishlist
 
         WishList wishList = new WishList(user, product);
 
         wishListService.createWishlist(wishList);
 
-        ApiResponse apiResponse = new ApiResponse(true, "Added to wishlist"+product.getCategory());
+        ApiResponse apiResponse = new ApiResponse(true, "Added to wishlist");
         return  new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
-
     }
 
     // get all wishlist item for a user
-
     @GetMapping("/{token}")
     public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("token") String token) {
 
@@ -62,12 +64,10 @@ public class WishListController {
         authenticationService.authenticate(token);
 
         // find the user
-
         User user = authenticationService.getUser(token);
 
         List<ProductDto> productDtos = wishListService.getWishListForUser(user);
 
         return new ResponseEntity<>(productDtos, HttpStatus.OK);
-
     }
 }
